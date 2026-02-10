@@ -1,5 +1,5 @@
 class Board:
-    def __init__(self, id, title, content, member_id, active=True, writer_name=None, writer_uid=None):
+    def __init__(self, id, title, content, member_id, active=True, writer_name=None, writer_uid=None, created_at=None):
         self.id = id  # DB의 PK
         self.title = title
         self.content = content
@@ -9,11 +9,12 @@ class Board:
         # JOIN을 통해 가져올 추가 정보들 (선택 사항)
         self.writer_name = writer_name
         self.writer_uid = writer_uid
+        self.created_at = created_at
 
     @classmethod
     def from_db(cls, row: dict):
         if not row: return None
-        # db에 있는 내용의 1줄을 dict 타입으로 가져와 객체로 만든다.
+        # db에 있는 내용의 1줄을 dict 타입으로 가져와 객체로 만듬
         return cls(
             id=row.get('id'),
             title=row.get('title'),
@@ -21,8 +22,9 @@ class Board:
             member_id=row.get('member_id'),
             active=bool(row.get('active')), # 현재 미구현!
             # JOIN 쿼리 시 사용할 이름과 아이디
-            writer_name=row.get('name'),
-            writer_uid=row.get('uid')
+            writer_name=row.get('writer_name'),
+            created_at=row.get('created_at'),
+            writer_uid=row.get('writer_uid')
         )
 
     def __str__(self): # print(board)로 테스트용
