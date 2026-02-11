@@ -29,8 +29,8 @@
                             성적관리
                         </a>
                         <ul class="dropdown-menu shadow">
-                            {# 1. 모든 로그인 사용자가 볼 수 있는 메뉴 #}
-                            {% if session.get('user_id') %}
+                            {# 1. user 권한을 가진 사용자가 볼 수 있는 메뉴 #}
+                            {% if session.get('user_role') == 'user' %}
                                 <li><a class="dropdown-item" href="/score/my">내 성적 조회</a></li>
                             {% endif %}
 
